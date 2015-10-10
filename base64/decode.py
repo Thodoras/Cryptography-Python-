@@ -30,4 +30,4 @@ def binToString(binary):
         third = int(binary[-8:], 2)
         second = int(binary[-16:-8], 2)
         first = int(binary[2:-16], 2)
-    return chr(first) + chr(second) + chr(third)
+    return '{}{}{}'.format(chr(first), chr(second), chr(third))
