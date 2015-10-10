@@ -18,16 +18,12 @@ def decode(string):
 
 def binToString(binary):
     size = len(binary) - 2
-    if (size - 8 <= 0):
-        third = int(binary[-size:], 2)
-        second = 0
-        first = 0
-    elif (size - 16 <= 0):
-        third = int(binary[-8:], 2)
-        second = int(binary[-size:-8], 2)
-        first = 0
+    if size < 9:
+        result = 0, 0, int(binary[-size:], 2)
+    elif size < 17:
+        result = 0, int(binary[-size:-8], 2), int(binary[-8:], 2)
     else:
-        third = int(binary[-8:], 2)
-        second = int(binary[-16:-8], 2)
-        first = int(binary[2:-16], 2)
-    return '{}{}{}'.format(chr(first), chr(second), chr(third))
+        result = (int(binary[2:-16], 2), int(binary[-16:-8], 2),
+                  int(binary[-8:], 2))
+
+    return ''.join(map(chr, result))
