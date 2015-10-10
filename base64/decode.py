@@ -18,7 +18,6 @@ def decode(string):
 
 def binToString(binary):
     size = len(binary) - 2
-    string = ""
     if (size - 8 <= 0):
         third = int(binary[-size:], 2)
         second = 0
