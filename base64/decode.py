@@ -10,7 +10,7 @@ def decode(string):
     new_str = ""
     if len(string) % 4 != 0:
         raise ValueError('length of string not a multiple of 4')
-    for i in range(0, len(string) / 4):
+    for i in xrange(0, len(string) / 4):
         temp = str(string[i*4:i*4+4])
         binary = bin((dictionary[temp[0]] << 18) + (dictionary[temp[1]] << 12) + (dictionary[temp[2]] << 6) + dictionary[temp[3]])
         new_str += binToString(binary)
