@@ -7,28 +7,24 @@ dictionary = {'A':0, 'B':1, 'C':2, 'D':3, 'E':4, 'F':5, 'G':6, 'H':7, 'I':8, 'J'
 '2':54, '3':55, '4':56, '5':57, '6':58, '7':59, '8':60, '9':61, '+':62, '/':63, '=':0}
 
 def decode(string):
-    new_str = ""
+    decoded = []
     if len(string) % 4 != 0:
         raise ValueError('length of string not a multiple of 4')
-    for i in range(0, len(string) / 4):
+    for i in xrange(0, len(string) / 4):
         temp = str(string[i*4:i*4+4])
-        binary = bin((dictionary[temp[0]] << 18) + (dictionary[temp[1]] << 12) + (dictionary[temp[2]] << 6) + dictionary[temp[3]])
-        new_str += binToString(binary)
-    return new_str
+        binary = bin((dictionary[temp[0]] << 18) + (dictionary[temp[1]] << 12)
+                     + (dictionary[temp[2]] << 6) + dictionary[temp[3]])
+        decoded.append(binToString(binary))
+    return ''.join(map(str, decoded))
 
 def binToString(binary):
     size = len(binary) - 2
-    string = ""
-    if (size - 8 <= 0):
-        third = int(binary[-size:], 2)
-        second = 0
-        first = 0
-    elif (size - 16 <= 0):
-        third = int(binary[-8:], 2)
-        second = int(binary[-size:-8], 2)
-        first = 0
+    if size < 9:
+        result = 0, 0, int(binary[-size:], 2)
+    elif size < 17:
+        result = 0, int(binary[-size:-8], 2), int(binary[-8:], 2)
     else:
-        third = int(binary[-8:], 2)
-        second = int(binary[-16:-8], 2)
-        first = int(binary[2:-16], 2)
-    return chr(first) + chr(second) + chr(third)
+        result = (int(binary[2:-16], 2), int(binary[-16:-8], 2),
+                  int(binary[-8:], 2))
+
+    return ''.join(map(chr, result))
