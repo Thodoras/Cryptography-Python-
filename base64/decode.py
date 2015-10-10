@@ -12,7 +12,8 @@ def decode(string):
         raise ValueError('length of string not a multiple of 4')
     for i in xrange(0, len(string) / 4):
         temp = str(string[i*4:i*4+4])
-        binary = bin((dictionary[temp[0]] << 18) + (dictionary[temp[1]] << 12) + (dictionary[temp[2]] << 6) + dictionary[temp[3]])
+        binary = bin((dictionary[temp[0]] << 18) + (dictionary[temp[1]] << 12)
+                     + (dictionary[temp[2]] << 6) + dictionary[temp[3]])
         decoded.append(binToString(binary))
     return ''.join(map(str, decoded))
 
